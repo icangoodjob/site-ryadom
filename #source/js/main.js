@@ -446,7 +446,7 @@ function searchActions(e){
 /*================== FAVORITE ====================*/
 
 const favoriteIcons = document.querySelectorAll('[data-favorite-button]');
-const favoriteModals = document.querySelectorAll('[favorite-modal]');
+const favoriteModals = document.querySelectorAll('[data-favorite-modal]');
 const deleteFavorite = document.querySelectorAll('[data-delete]');
 
 for (let i = 0; i < favoriteIcons.length; i++){
