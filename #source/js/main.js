@@ -141,6 +141,10 @@ document.addEventListener("DOMContentLoaded", function() {
 			loopAdditionalSlides: 2,
 			preloadImages: false,
 			watchSlidesProgress: true,
+			mouseWheelControl: true,
+			mousewheel: {
+				invert: false,
+			},
 			slideClass: 'product__card',
 			wrapperClass: 'products__wrapper',
 			navigation: {
@@ -179,7 +183,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	const recipesSlider = document.querySelector('.recipes__container');
 	const recipesSwiper = new Swiper(recipesSlider, {
 		loop: false,
-		
 		slidesPerGroup: 1,
 		slidesPerView: 2,
 		speed: 800,
@@ -522,7 +525,7 @@ allModals.forEach(function (item) {
 	});
 });
 
-/* Проверка мобильного браузера */
+/* ==================Проверка мобильного браузера =====================*/
 let isMobile = { Android: function () { 
 	return navigator.userAgent.match(/Android/i); 
 }, 
@@ -544,5 +547,39 @@ any: function () {
 }
 addTouchClass();
 
+/*================== PROGRESS ARROW back to top====================*/
+
+var progressPath = document.querySelector('.progress-wrap path');
+var pathLength = progressPath.getTotalLength();
+progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
+progressPath.style.strokeDasharray = pathLength + ' ' + pathLength;
+progressPath.style.strokeDashoffset = pathLength;
+progressPath.getBoundingClientRect();
+progressPath.style.transition = progressPath.style.WebkitTransition = 'stroke-dashoffset 10ms linear';		
+var updateProgress = function () {
+	var scroll = $(window).scrollTop();
+	var height = $(document).height() - $(window).height();
+	var progress = pathLength - (scroll * pathLength / height);
+	progressPath.style.strokeDashoffset = progress;
+}
+updateProgress();
+$(window).scroll(updateProgress);
+var offset = 100;
+var duration = 0;
+$(window).on('scroll', function() {
+	if ($(this).scrollTop() > offset) {
+		$('.progress-wrap').addClass('active-progress');
+	} else {
+		$('.progress-wrap').removeClass('active-progress');
+	}
 });
+$('.progress-wrap').on('click', function(event) {
+	event.preventDefault();
+	$('html, body').animate({scrollTop: 0}, duration);
+	return false;
+})
+
+});
+
+
 
